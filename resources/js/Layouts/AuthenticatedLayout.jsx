@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -28,6 +29,11 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
+                            <div>
+                                <IoIosNotificationsOutline className='text-3xl'/>
+                                <p className='text-xs w-5 h-5 flex justify-center items-center rounded-full bg-red-500 text-white absolute
+                                top-4 ml-4'>2</p>
+                            </div>
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
