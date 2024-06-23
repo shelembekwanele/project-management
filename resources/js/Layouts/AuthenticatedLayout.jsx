@@ -32,7 +32,7 @@ export default function Authenticated({ user, header, children }) {
                             <div>
                                 <IoIosNotificationsOutline className='text-3xl'/>
                                 <p className='text-xs w-5 h-5 flex justify-center items-center rounded-full bg-red-500 text-white absolute
-                                top-4 ml-4'>2</p>
+                                top-4 ml-4 scale-75'>2</p>
                             </div>
                             <div className="ms-3 relative">
                                 <Dropdown>
