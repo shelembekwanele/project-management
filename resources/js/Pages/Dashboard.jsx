@@ -9,6 +9,7 @@ import Project from '@/Components/Project';
 import Modal from '@/Components/Modal';
 import DangerButton from '@/Components/DangerButton';
 import SecondaryButton from '@/Components/SecondaryButton';
+import Edit from './Project/Edit';
 
 
 export default function Dashboard({ auth,projects }) {
@@ -62,6 +63,8 @@ export default function Dashboard({ auth,projects }) {
             </div>}
 
             {page=="add" && <Add setPage={setPage}/>}
+
+            {page=="edit" && <Edit id={id}/>}
 
             <Modal show={show} onClose={()=>setShow(false)} maxWidth='lg'>
                 <div className='p-5 flex flex-col w-full border'>

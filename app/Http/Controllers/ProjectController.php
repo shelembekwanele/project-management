@@ -40,7 +40,7 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Inertia::render('Project/Edit', ['project' => auth()->user()->projects()->findOrFail($id)]);
     }
 
     /**
@@ -48,7 +48,18 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $data = $request->validate([
+            'name' => 'required|min:3|string',
+            'description' => 'max:200',
+            'status' => 'required|in:todo,in_progress,done',
+            'endDate' => 'required|date',
+            'startDate' => 'required|date'
+        ]);
+
+        auth()->user()->projects()->find($id)->update($data);
+
+        return Redirect::route('dashboard');
     }
 
     /**

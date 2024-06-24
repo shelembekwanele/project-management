@@ -1,4 +1,6 @@
 import { IoMdClose } from "react-icons/io";
+import { FaRegEdit } from "react-icons/fa";
+import { Link } from "@inertiajs/react";
 
 
 export default function Project ({id,name,endDate,onDelete}){
@@ -8,7 +10,10 @@ export default function Project ({id,name,endDate,onDelete}){
             <small>{endDate}</small>
         </div>
         
+        <div className="flex gap-4">
+            <Link href={`/project/${id}`}><FaRegEdit className="text-2xl p-1 border rounded-md cursor-pointer"/></Link>
+            <IoMdClose className="text-2xl p-1 border rounded-md cursor-pointer" onClick={()=>onDelete(id)}/> 
+        </div>
         
-        <IoMdClose className="text-2xl p-1 border rounded-md text-gray-500 cursor-pointer" onClick={()=>onDelete(id)}/>
     </div>
 }
