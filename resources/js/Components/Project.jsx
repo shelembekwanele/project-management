@@ -6,7 +6,7 @@ import { Link } from "@inertiajs/react";
 export default function Project ({id,name,endDate,onDelete}){
     return <div className="flex justify-between p-5 rounded-md border shadow-sm">
         <div>
-            <p>{name}</p>  
+            <p className="font-semibold underline cursor-pointer">{name}</p>  
             <small>{endDate}</small>
         </div>
         
