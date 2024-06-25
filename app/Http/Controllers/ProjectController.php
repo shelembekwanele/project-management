@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -40,7 +40,9 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        return Inertia::render('Project/Edit', ['project' => auth()->user()->projects()->findOrFail($id)]);
+        $userList = User::all()->select(['id', 'name']);
+
+        return Inertia::render('Project/Edit', ['project' => auth()->user()->projects()->findOrFail($id), 'users' => $userList]);
     }
 
     /**

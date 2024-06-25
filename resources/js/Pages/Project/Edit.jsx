@@ -6,7 +6,7 @@ import InputError from '@/Components/InputError';
 import { useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function Edit({auth,project}) {
+export default function Edit({auth,project,users}) {
 
     const {data,setData,put,errors} = useForm(project);
 
