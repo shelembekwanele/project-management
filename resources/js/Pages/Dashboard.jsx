@@ -40,7 +40,7 @@ export default function Dashboard({ auth,projects }) {
             <Head title="Dashboard" />
 
             {page=="dashboard" && <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg p-10">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
                     <div className="flex items-end justify-between">
                         <div>
                             <InputLabel className='py-2'>Search for project.</InputLabel>

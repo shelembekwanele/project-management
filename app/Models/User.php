@@ -47,6 +47,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function ownedTeams()
+    {
+        return $this->hasMany(Team::class);
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class);

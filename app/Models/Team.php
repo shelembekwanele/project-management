@@ -12,6 +12,11 @@ class Team extends Model
 
     protected $fillable = ['name'];
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function projects()
     {
         return $this->belongsToMany(Project::class);

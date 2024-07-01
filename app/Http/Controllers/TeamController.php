@@ -15,7 +15,8 @@ class TeamController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $teams = $user->teams()->with('users')->get(); // Assuming 'users' is the relationship name
+        $teams = $user->ownedTeams()->with(['users', 'owner'])->get(); // Assuming 'users' is the relationship name
+
 
         return Inertia::render('Team/Index', ['teams' => $teams]);
     }
@@ -43,7 +44,7 @@ class TeamController extends Controller
         ]);
 
         // Create the team
-        $team = auth()->user()->teams()->create(['name' => $data['name']]);
+        $team = auth()->user()->ownedTeams()->create(['name' => $data['name']]);
 
         // Attach members to the team if any
         if (!empty($data['teamMembers'])) {
@@ -52,11 +53,6 @@ class TeamController extends Controller
 
         return redirect()->route('team.index');
     }
-
-    /**
-     * Display the specified resource.
-     */
-
 
     /**
      * Display the specified resource.
