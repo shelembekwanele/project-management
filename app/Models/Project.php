@@ -18,13 +18,15 @@ class Project extends Model
         'end_date' => 'date',
     ];
 
-    public function createBy()
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    // Project belongs to a Team
     public function team()
     {
-        return $this->hasOne(Team::class);
+        return $this->belongsTo(Team::class);
+    }
+
+    // Project belongs to a User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

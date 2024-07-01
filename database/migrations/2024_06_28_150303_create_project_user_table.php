@@ -10,8 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id');
+            $table->foreignId('project_id');
+            $table->timestamps();
         });
     }
 
@@ -20,8 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('teams', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('project_user');
     }
 };

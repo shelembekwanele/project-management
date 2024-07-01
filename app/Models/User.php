@@ -52,8 +52,9 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    // User can form many Teams
     public function teams()
     {
-        return $this->hasMany(Team::class);
+        return $this->belongsToMany(Team::class);
     }
 }
