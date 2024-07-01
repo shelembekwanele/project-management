@@ -15,10 +15,10 @@ class TeamController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $teams = $user->ownedTeams()->with(['users', 'owner'])->get(); // Assuming 'users' is the relationship name
+        $ownedTeams = $user->ownedTeams()->with(['users'])->get(); // Assuming 'users' is the relationship name
+        $teams = $user->teams()->with(['users', 'owner'])->get();
 
-
-        return Inertia::render('Team/Index', ['teams' => $teams]);
+        return Inertia::render('Team/Index', ['ownedTeams' => $ownedTeams, 'teams' => $teams]);
     }
 
 
@@ -76,6 +76,8 @@ class TeamController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        auth()->user()->ownedTeams()->find($id)->delete();
+
+        return redirect()->route('team.index');
     }
 }
