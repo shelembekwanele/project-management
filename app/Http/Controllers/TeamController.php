@@ -60,7 +60,14 @@ class TeamController extends Controller
 
     public function show(string $id)
     {
-        //
+        $user = auth()->user();
+
+        // Retrieve all users and filter out the authenticated user
+        $users = User::where('id', '!=', $user->id)->select(['id', 'name'])->get();
+
+        $team = $user->ownedTeams()->where(['id' => $id])->with('users')->get();
+
+        return Inertia::render('Team/Show', ['users' => $users, 'team' => $team[0]]);
     }
 
     /**
@@ -68,7 +75,21 @@ class TeamController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|min:3',
+            'teamMembers' => 'nullable|array',
+            'teamMembers.*' => 'integer|exists:users,id' // Ensure each member is a valid user ID if provided
+        ]);
+
+        $team = auth()->user()->ownedTeams()->findOrFail($id);
+
+        $team->update(['name' => $data['name']]);
+
+        $team->users()->sync($data['teamMembers']);
+
+        return redirect()->route('team.index');
+
+
     }
 
     /**
