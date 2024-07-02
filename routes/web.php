@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('project', ProjectController::class);
+    Route::put('project/assign-team/{id}/{teamId}', [ProjectController::class, 'assign_team']);
     Route::resource('team', TeamController::class);
     Route::get('team/create', [TeamController::class, 'create'])->name('team.create');
 });

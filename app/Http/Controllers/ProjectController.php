@@ -14,7 +14,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Dashboard', ['projects' => auth()->user()->projects]);
+
+        $projects = auth()->user()->projects()->with('team')->get();
+
+        return Inertia::render('Dashboard', ['projects' => $projects]);
     }
 
     /**
@@ -40,9 +43,13 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $userList = User::all()->select(['id', 'name']);
+        $ownedTeams = auth()->user()->ownedTeams()->get();
 
-        return Inertia::render('Project/Edit', ['project' => auth()->user()->projects()->findOrFail($id), 'users' => $userList]);
+        $project = auth()->user()->projects()->findOrFail($id);
+
+        $team = $project->team()->with('users')->get();
+
+        return Inertia::render('Project/Edit', ['project' => $project, 'team' => $team[0], 'ownedTeams' => $ownedTeams]);
     }
 
     /**
@@ -62,6 +69,18 @@ class ProjectController extends Controller
         auth()->user()->projects()->find($id)->update($data);
 
         return Redirect::route('dashboard');
+    }
+
+    public function assign_team(string $id, string $teamId)
+    {
+
+        $project = auth()->user()->projects()->find($id);
+
+        $team = auth()->user()->ownedTeams()->find($teamId);
+
+        $project->team()->associate($team)->save();
+
+        return redirect()->back();
     }
 
     /**

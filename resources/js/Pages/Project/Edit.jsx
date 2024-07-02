@@ -3,19 +3,15 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
-import { useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function Edit({auth,project,users}) {
+export default function Edit({auth,project,ownedTeams,team}) {
 
     const {data,setData,put,errors} = useForm(project);
 
     function handleSubmit(event){
         event.preventDefault();
         put(`/project/${data.id}`,{
-            onSuccess:()=>{
-                setPage('dashboard')
-            },
             preserveScroll:true
         });
     }
@@ -24,6 +20,12 @@ export default function Edit({auth,project,users}) {
         const {name,value}=event.target;
         
         setData({...data,[name]:value});
+    }
+
+    function handleTeamChange(event){
+        const {value}=event.target;
+
+        put(`/project/assign-team/${project.id}/${value}`,{preserveScroll:true,preserveState:true});
     }
 
     return (
@@ -71,6 +73,16 @@ export default function Edit({auth,project,users}) {
                             <TextInput type="date" name="endDate" value={data.endDate} onChange={handleChange}
                             className="w-full"/>
                             <InputError message={errors.endDate}/>
+                        </div>
+
+                        <div>
+                            <InputLabel>Assign to team :</InputLabel>
+                                <select name='team' value={project.team_id} onChange={handleTeamChange} className='border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full'>
+                                    {ownedTeams.map(t=>(
+                                        <option key={t.id} value={t.id}>{t.name}</option>
+                                    ))}
+                                </select>
+                            <InputError message={errors.status}/>
                         </div>
                         
                         

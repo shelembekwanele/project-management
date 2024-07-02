@@ -11,7 +11,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'startDate', 'endDate', 'status', 'user_id'];
+    protected $fillable = ['name', 'description', 'startDate', 'endDate', 'status', 'user_id', 'team_id'];
 
     protected $casts = [
         'start_date' => 'date',

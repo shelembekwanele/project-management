@@ -19,7 +19,7 @@ class Team extends Model
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class);
+        return $this->hasMany(Project::class);
     }
 
     // Team has many Users
