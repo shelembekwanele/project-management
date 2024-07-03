@@ -38,9 +38,14 @@ export default function Project ({id,name,endDate,team,onDelete}){
 
     return <div className="flex justify-between p-5 rounded-md border shadow-sm">
         <div>
-            <p className="font-semibold underline cursor-pointer">{name}</p>  
-            <small className={time.days<1 ? 'text-red-500' : ''}>Time remaining : <span><br/>{time.days} days  {time.hours} hours  {time.minutes} minutes</span> </small><br/>
-            {team && <small>Team : {team.name}</small>}
+            <div>
+                <Link href={`/project/board/${id}`} className="font-semibold underline cursor-pointer">{name}</Link>         
+            </div>
+
+            <div>
+                <small className={time.days<1 ? 'text-red-500' : ''}>Time remaining : <span><br/>{time.days} days  {time.hours} hours  {time.minutes} minutes</span> </small><br/>
+                {team && <small>Team : {team.name}</small>}
+            </div>
         </div>
         
         <div className="flex gap-4">

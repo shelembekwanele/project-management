@@ -49,7 +49,19 @@ class ProjectController extends Controller
 
         $team = $project->team()->with('users')->get();
 
-        return Inertia::render('Project/Edit', ['project' => $project, 'team' => $team[0], 'ownedTeams' => $ownedTeams]);
+        return Inertia::render('Project/Edit', ['project' => $project, 'team' => $team, 'ownedTeams' => $ownedTeams]);
+    }
+
+    /*
+     * Display project board
+     */
+
+    public function board(string $id)
+    {
+
+        $project = auth()->user()->projects()->findOrFail($id);
+
+        return Inertia::render('Project/Board', ['project' => $project]);
     }
 
     /**
