@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('project', ProjectController::class);
     Route::put('project/assign-team/{id}/{teamId}', [ProjectController::class, 'assign_team']);
     Route::get('project/board/{id}', [ProjectController::class, 'board']);
+
+    Route::resource('task', TaskController::class);
+
+    Route::post("/task/{id}", [TaskController::class, 'store'])->name('task.store');
+
     Route::resource('team', TeamController::class);
     Route::get('team/create', [TeamController::class, 'create'])->name('team.create');
 });

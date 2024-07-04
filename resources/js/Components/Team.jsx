@@ -6,7 +6,7 @@ import { Link } from "@inertiajs/react";
 export default function Team ({id,name,owner,teamMembers,onDelete=null}){
     return <div className="flex justify-between p-5 rounded-md border shadow-sm">
         <div>
-            <p className="font-semibold underline cursor-pointer">{name}</p>  
+            <p className="font-semibold">{name}</p>  
             <small>Team members : {teamMembers}</small>
             <br/>
             {owner && <small>Owner : {owner.name}</small>}

@@ -4,9 +4,7 @@ import PrimaryButton from "./PrimaryButton";
 import TextInput from "./TextInput";
 import { IoMdClose } from "react-icons/io";
 
-export default function CommentModal(show=false,onClose){
-
-    console.log(onClose)
+export default function CommentModal({show=false,onClose}){
 
     return (
         <Modal show={show} onClose={onClose}>

@@ -8,9 +8,13 @@ import { FaTimes } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import Modal from '@/Components/Modal';
 import TaskModal from '@/Components/TaskModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Column from '@/Components/Column';
 
-export default function Board({ auth, project }) {
+export default function Board({ auth, project,tasks }) {
+
+    console.log({tasks})
+
     const [isTaskModalVisible, setTaskModalVisible] = useState(false);
 
     const handleTaskModalClose = () => setTaskModalVisible(false);
@@ -31,52 +35,13 @@ export default function Board({ auth, project }) {
                     
                     <div className=" flex items-end justify-center pb-10">
                         <div className="grid grid-cols-3 gap-5 w-full h-full">
-                            <div className="bg-blue-100 rounded-lg">
-                                <p className="p-5 bg-blue-500 text-white rounded-lg text-center">TODO</p>
-                                <div className="p-2 flex flex-col gap-4">
-                                    <div className="bg-white p-2 rounded-lg flex justify-between">
-                                        <div>
-                                            <p>Task name 001</p>
-                                            <small>owner: Kwanele Shelembe</small><br />
-                                            <small>expected time: 16 hrs</small>
-                                        </div>
-                                        <div><IoMdClose className="text-2xl p-1 border rounded-md cursor-pointer" /></div>
-                                    </div>
-                                    {/* Add more tasks as needed */}
-                                </div>
-                            </div>
-
-                            <div className="bg-purple-100 rounded-lg">
-                                <p className="p-5 bg-purple-500 text-white rounded-lg text-center">IN PROGRESS</p>
-                                <div className="p-2 flex flex-col gap-4">
-                                    <div className="bg-white p-2 rounded-lg flex justify-between">
-                                        <div>
-                                            <p>Task name 001</p>
-                                            <small>owner: Kwanele Shelembe</small>
-                                        </div>
-                                        <div><IoMdClose className="text-2xl p-1 border rounded-md cursor-pointer" /></div>
-                                    </div>
-                                    {/* Add more tasks as needed */}
-                                </div>
-                            </div>
-
-                            <div className="bg-pink-100 rounded-lg">
-                                <p className="p-5 bg-pink-500 text-white rounded-lg text-center">COMPLETED</p>
-                                <div className="p-2 flex flex-col gap-4">
-                                    <div className="bg-white p-2 rounded-lg flex justify-between">
-                                        <div>
-                                            <p>Task name 001</p>
-                                            <small>owner: Kwanele Shelembe</small>
-                                        </div>
-                                        <div><IoMdClose className="text-2xl p-1 border rounded-md cursor-pointer" /></div>
-                                    </div>
-                                    {/* Add more tasks as needed */}
-                                </div>
-                            </div>
+                            <Column title="TODO" color='blue' tasks={tasks.filter(t=>t.status=='todo')}/>
+                            <Column title="IN PROGRESS" color='purple' tasks={tasks.filter(t=>t.status=='in_progress')}/>
+                            <Column title="COMPLETE" color='pink' tasks={tasks.filter(t=>t.status=='complete')}/>
                         </div>
                     </div>
                 </div>
-                {isTaskModalVisible && <TaskModal show={true} onClose={handleTaskModalClose} />}
+                <TaskModal show={isTaskModalVisible} onClose={handleTaskModalClose} project={project} action={'create'}/>
             </div>
         </AuthenticatedLayout>
     );
