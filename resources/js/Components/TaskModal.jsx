@@ -91,9 +91,9 @@ export default function TaskModal({show,onClose,project,action,task}){
                         <InputError message={errors.status}/>
                     </div>
 
-                    <div>
+                    {action == 'update' && <div>
                        <SecondaryButton onClick={()=>setShowComment(true)}>Comments</SecondaryButton> 
-                    </div>
+                    </div>}
                     
                     <PrimaryButton className="justify-center">{action =='create' ? "Create" : 'Update'} Task</PrimaryButton>
                 </form>
