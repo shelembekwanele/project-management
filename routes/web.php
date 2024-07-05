@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskCommentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('task', TaskController::class);
 
     Route::post("/task/{id}", [TaskController::class, 'store'])->name('task.store');
+
+    Route::post('/taskComment/{taskId}', [TaskCommentController::class, 'store'])->name('taskComment.store');
+    Route::resource('taskComment', TaskCommentController::class);
 
     Route::resource('team', TeamController::class);
     Route::get('team/create', [TeamController::class, 'create'])->name('team.create');

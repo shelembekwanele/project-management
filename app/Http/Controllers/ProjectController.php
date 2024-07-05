@@ -61,7 +61,7 @@ class ProjectController extends Controller
 
         $project = auth()->user()->projects()->findOrFail($id);
 
-        $tasks = $project->tasks()->with('owner')->get();
+        $tasks = $project->tasks()->with(['owner', 'comments.owner'])->get();
 
         return Inertia::render('Project/Board', ['project' => $project, 'tasks' => $tasks]);
     }

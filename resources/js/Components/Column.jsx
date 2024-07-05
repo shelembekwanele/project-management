@@ -27,8 +27,13 @@ export default function Column({title,color='gray',tasks,handleClick}){
             <div className="p-2 flex flex-col gap-4 max-h-72 overflow-y-auto">
                 {tasks.map(t=>(
                     <div key={t.id} className="bg-white p-2 rounded-lg flex justify-between cursor-pointer">
+                        
                         <div onClick={()=>handleClick(t)}>
-                            <p>{t.name}</p>
+                            <div className='flex gap-2'>
+                                <p>{t.name}</p>
+                                {t.comments.length-localStorage.getItem('commentsLength') > 0 && <div className='bg-red-500 text-white rounded-full w-5 h-5 flex justify-center items-center text-sm scale-90'>{t.comments.length-localStorage.getItem('commentsLength')}</div>}
+                            </div>
+    
                             <small>owner: {t.owner.name}</small><br />
                             <small>expected time: {t.estimatedTime} hrs</small> 
                         </div>

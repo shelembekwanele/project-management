@@ -31,6 +31,14 @@ export default function Board({ auth, project,tasks }) {
         handleTaskModalOpen();
     }
 
+    useEffect(()=>{
+        if(task){
+           const t=tasks.find(t=>t.id==task.id);
+           setTask(t);
+        }
+        
+    },[tasks]);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -59,7 +67,7 @@ export default function Board({ auth, project,tasks }) {
                     <div className='hidden bg-pink-500'></div>
                     <div className='hidden bg-pink-100'></div>
                 </div>
-                <TaskModal show={isTaskModalVisible} onClose={handleTaskModalClose} project={project} action={action} task={task}/>
+                <TaskModal show={isTaskModalVisible} onClose={handleTaskModalClose} project={project} action={action} task={task} auth={auth}/>
             </div>
         </AuthenticatedLayout>
     );

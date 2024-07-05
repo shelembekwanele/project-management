@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\TaskComment;
 
 class Task extends Model
 {
@@ -21,5 +22,10 @@ class Task extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(TaskComment::class);
     }
 }

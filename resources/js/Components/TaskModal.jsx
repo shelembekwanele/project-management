@@ -9,7 +9,7 @@ import { IoMdClose } from "react-icons/io";
 import { useForm } from "@inertiajs/react";
 import InputError from "./InputError";
 
-export default function TaskModal({show,onClose,project,action,task}){
+export default function TaskModal({show,onClose,project,action,task,auth}){
 
     const [showComment,setShowComment]=useState(false);
 
@@ -56,7 +56,6 @@ export default function TaskModal({show,onClose,project,action,task}){
 
         
     }
-
     return (
         <Modal show={show} onClose={onClose}>
             <div className='m-10'>
@@ -92,13 +91,14 @@ export default function TaskModal({show,onClose,project,action,task}){
                     </div>
 
                     {action == 'update' && <div>
-                       <SecondaryButton onClick={()=>setShowComment(true)}>Comments</SecondaryButton> 
+                       <SecondaryButton onClick={()=>setShowComment(true)}>Comments ({task.comments ? task.comments.length : 0})</SecondaryButton> 
+                       
                     </div>}
                     
                     <PrimaryButton className="justify-center">{action =='create' ? "Create" : 'Update'} Task</PrimaryButton>
                 </form>
                 
-                <CommentModal show={showComment} onClose={()=>setShowComment(false)}/>
+                <CommentModal show={showComment} onClose={()=>setShowComment(false)} task={task} auth={auth}/>
             </div>
         </Modal>
     )

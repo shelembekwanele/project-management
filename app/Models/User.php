@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Project;
 use App\Models\Team;
+use App\Models\TaskComment;
 
 class User extends Authenticatable
 {
@@ -66,5 +67,10 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function taskComments()
+    {
+        return $this->hasMany(TaskComment::class);
     }
 }
