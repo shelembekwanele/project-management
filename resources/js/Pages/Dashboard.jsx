@@ -12,9 +12,7 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import Edit from './Project/Edit';
 
 
-export default function Dashboard({ auth,ownedProjects,projects }) {
-
-    console.log({ownedProjects,projects})
+export default function Dashboard({ auth,projects }) {
 
     const [page,setPage]=useState("dashboard");
     const [show,setShow]=useState(false);
