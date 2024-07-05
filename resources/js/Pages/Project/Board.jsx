@@ -13,12 +13,23 @@ import Column from '@/Components/Column';
 
 export default function Board({ auth, project,tasks }) {
 
-    console.log({tasks})
-
     const [isTaskModalVisible, setTaskModalVisible] = useState(false);
 
     const handleTaskModalClose = () => setTaskModalVisible(false);
     const handleTaskModalOpen = () => setTaskModalVisible(true);
+
+    const [task,setTask]=useState(null);
+    const [action,setAction]=useState("create");
+
+    function handleTaskClick(task){
+        setTask(task);
+        setAction('update');
+        handleTaskModalOpen();
+    }
+    function handleAddTask(){
+        setAction('create');
+        handleTaskModalOpen();
+    }
 
     return (
         <AuthenticatedLayout
@@ -28,20 +39,27 @@ export default function Board({ auth, project,tasks }) {
             <Head title="Project Board" />
             <div className="py-12">
                 
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg pt-10">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg pt-5">
                     <div className='flex justify-end py-5'>
-                       <PrimaryButton onClick={handleTaskModalOpen}>Add Task</PrimaryButton> 
+                       <PrimaryButton onClick={handleAddTask}>Add New Task</PrimaryButton> 
                     </div>
                     
                     <div className=" flex items-end justify-center pb-10">
                         <div className="grid grid-cols-3 gap-5 w-full h-full">
-                            <Column title="TODO" color='blue' tasks={tasks.filter(t=>t.status=='todo')}/>
-                            <Column title="IN PROGRESS" color='purple' tasks={tasks.filter(t=>t.status=='in_progress')}/>
-                            <Column title="COMPLETE" color='pink' tasks={tasks.filter(t=>t.status=='complete')}/>
+                            <Column title="TODO" color='blue' tasks={tasks.filter(t=>t.status=='todo')} handleClick={handleTaskClick}/>
+                            <Column title="IN PROGRESS" color='purple' tasks={tasks.filter(t=>t.status=='in_progress')} handleClick={handleTaskClick}/>
+                            <Column title="COMPLETE" color='pink' tasks={tasks.filter(t=>t.status=='complete')} handleClick={handleTaskClick}/>
                         </div>
                     </div>
+
+                    <div className='hidden bg-blue-500'></div>
+                    <div className='hidden bg-blue-100'></div>
+                    <div className='hidden bg-purple-500'></div>
+                    <div className='hidden bg-purple-100'></div>
+                    <div className='hidden bg-pink-500'></div>
+                    <div className='hidden bg-pink-100'></div>
                 </div>
-                <TaskModal show={isTaskModalVisible} onClose={handleTaskModalClose} project={project} action={'create'}/>
+                <TaskModal show={isTaskModalVisible} onClose={handleTaskModalClose} project={project} action={action} task={task}/>
             </div>
         </AuthenticatedLayout>
     );

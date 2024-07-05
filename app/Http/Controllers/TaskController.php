@@ -41,7 +41,7 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -49,7 +49,18 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|min:3',
+            'description' => 'nullable|min:3',
+            'estimatedTime' => 'required|integer',
+            'status' => 'required|in:todo,in_progress,complete'
+        ]);
+
+        $task = auth()->user()->tasks()->findOrFail($id);
+
+        $task->update($data);
+
+        return redirect()->back();
     }
 
     /**
@@ -57,6 +68,10 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = auth()->user()->tasks()->findOrFail($id);
+
+        $task->delete();
+
+        return redirect()->back();
     }
 }
