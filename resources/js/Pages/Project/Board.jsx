@@ -18,7 +18,7 @@ export default function Board({ auth, project,tasks }) {
     const handleTaskModalClose = () => setTaskModalVisible(false);
     const handleTaskModalOpen = () => setTaskModalVisible(true);
 
-    const [task,setTask]=useState(null);
+    const [task,setTask]=useState({comments:[]});
     const [action,setAction]=useState("create");
 
     function handleTaskClick(task){
@@ -34,7 +34,7 @@ export default function Board({ auth, project,tasks }) {
     useEffect(()=>{
         if(task){
            const t=tasks.find(t=>t.id==task.id);
-           setTask(t);
+           setTask(t ? t :{comments:[]} );
         }
         
     },[tasks]);

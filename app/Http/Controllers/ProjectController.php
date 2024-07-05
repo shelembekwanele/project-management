@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -14,11 +14,21 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
 
-        $projects = auth()->user()->projects()->with('team')->get();
+        $projects = Project::where('user_id', $user->id)
+            ->orWhereHas('team', function ($query) use ($user) {
+                $query->whereHas('users', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                });
+            })
+            ->with('team')
+            ->get();
 
         return Inertia::render('Dashboard', ['projects' => $projects]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -58,13 +68,25 @@ class ProjectController extends Controller
 
     public function board(string $id)
     {
+        $user = auth()->user();
 
-        $project = auth()->user()->projects()->findOrFail($id);
+        $project = Project::where('id', $id)
+            ->where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->orWhereHas('team', function ($query) use ($user) {
+                        $query->whereHas('users', function ($query) use ($user) {
+                            $query->where('user_id', $user->id);
+                        });
+                    });
+            })
+            ->firstOrFail();
 
         $tasks = $project->tasks()->with(['owner', 'comments.owner'])->get();
 
         return Inertia::render('Project/Board', ['project' => $project, 'tasks' => $tasks]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
